@@ -1,0 +1,55 @@
+<!-- الشاشة الأولى: إدخال البيانات -->
+<div class="card" id="formCard">
+    <h2>نادي التوعية والأمن</h2>
+    <p style="color: #8b949e; font-size: 14px;">أدخل بياناتك للمشاركة في الحملة</p>
+    <input type="text" id="username" placeholder="الاسم" required>
+    
+    <select id="userCategory" required>
+        <option value="" disabled selected>اختر التصنيف (طالب، موظف...)</option>
+        <option value="طالب">طالب</option>
+        <option value="موظف">موظف</option>
+        <option value="مهتم">مهتم</option>
+    </select>
+
+    <button onclick="showAlert()">دخول</button>
+</div>
+
+<!-- الشاشة الثانية: التنبيه (تظهر تلقائياً بالبيانات المدخلة) -->
+<div class="card" id="alertCard" style="display: none;">
+    <div class="lock-icon">🔒</div>
+    <div class="alert-title">تنبيه أمني</div>
+    <div class="hacked-header" id="hackedText"></div>
+    
+    <p style="color: #c9d1d9; font-size: 14px; line-height: 1.6; text-align: right;">
+        دخلت رابط ما تعرف مصدره وكتبت معلوماتك على طول. لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين.
+    </p>
+
+    <div class="stolen-box">
+        <div style="color: #ff7b72; font-size: 13px; margin-bottom: 8px;">🚨 البيانات اللي "سُرقت" منك الحين:</div>
+        <div class="data-row"><span>الاسم</span><b id="displayUsername"></b></div>
+        <div class="data-row" style="border:none;"><span>التصنيف</span><b id="displayCategory"></b></div>
+    </div>
+
+    <div class="tip-box">
+        ✔️ تأكد من مصدر أي رابط قبل ما تفتحه أو تدخل فيه
+    </div>
+</div>
+
+<script>
+    function showAlert() {
+        var name = document.getElementById('username').value;
+        var category = document.getElementById('userCategory').value;
+
+        if (!name || !category) {
+            alert("يرجى تعبئة جميع الحقول واختيار التصنيف!");
+            return;
+        }
+
+        document.getElementById('hackedText').innerText = "هكرنااااك يا " + name + " !";
+        document.getElementById('displayUsername').innerText = name;
+        document.getElementById('displayCategory').innerText = category;
+
+        document.getElementById('formCard').style.display = 'none';
+        document.getElementById('alertCard').style.display = 'block';
+    }
+</script>
