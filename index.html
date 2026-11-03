@@ -1,5 +1,5 @@
 <div class="container">
-    <!-- واجهة تسجيل الدخول -->
+    <!-- واجهة تسجيل الدخول (تظهر أولاً) -->
     <div id="loginSection">
         <h1>🛡️ الحملة التوعوية</h1>
         <p style="text-align: center;">الرجاء إدخال بياناتك الشخصية للمتابعة واستعراض المحتوى الأمني.</p>
@@ -22,32 +22,35 @@
         <button onclick="showAlert()">دخول</button>
     </div>
 
-    <!-- واجهة رسالة هكررتك (مخفية افتراضياً ولن تظهر إلا بعد الضغط على دخول) -->
+    <!-- واجهة رسالة هكررتك (مخفية ولن تظهر أبداً إلا بعد الضغط على دخول) -->
     <div id="resultSection">
-        <h1 style="text-align: center; color: #ff6b6b; font-size: 30px;">⚠️ هكررتك!</h1>
+        <h1 style="text-align: center; color: #ff6b6b;">⚠️ هكررتك!</h1>
         <p style="text-align: center;">لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين!</p>
         
         <div class="alert-box">
-            <strong style="font-size: 18px; color: #ffffff;">البيانات اللي "سُرقت" منك:</strong>
-            <div id="displayData" class="data-display"></div>
+            <p><strong>البيانات اللي "سُرقت" منك:</strong></p>
+            <p id="displayData" style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; margin-top: 8px; font-size: 18px;"></p>
         </div>
         
-        <p style="text-align: center; font-size: 16px; color: #cbd5e1;">✔️ تأكد دائماً من مصدر أي رابط قبل ما تفتحه أو تدخل بياناتك فيه.</p>
+        <p style="text-align: center; margin-top: 20px; font-size: 16px;">✔️ تأكد دائماً من مصدر أي رابط قبل ما تفتحه أو تدخل بياناتك فيه.</p>
     </div>
 </div>
 
 <script>
     function showAlert() {
-        const name = document.getElementById('userName').value;
-        const category = document.getElementById('userCategory').value;
+        const name = document.getElementById('userName-input')?.value || document.getElementById('userName').value;
+        const nameInput = document.getElementById('userName').value;
+        const categoryInput = document.getElementById('userCategory').value;
 
-        if(!name || !category) {
+        if(!nameInput || !categoryInput) {
             alert('الرجاء إدخال الاسم واختيار الفئة أولاً');
             return;
         }
 
-        document.getElementById('displayData').innerHTML = `👤 <b>الاسم:</b> ${name}<br>🎓 <b>الفئة:</b> ${category}`;
+        // عرض البيانات المسروقة
+        document.getElementById('displayData').innerHTML = `👤 الاسم: ${nameInput}<br>🎓 الفئة: ${categoryInput}`;
 
+        // إخفاء نموذج الدخول وإظهار رسالة هكررتك
         document.getElementById('loginSection').style.display = 'none';
         document.getElementById('resultSection').style.display = 'block';
     }
