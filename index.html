@@ -2,7 +2,7 @@
     <!-- واجهة تسجيل الدخول -->
     <div id="loginSection">
         <h1>🛡️ الحملة التوعوية</h1>
-        <p>الرجاء إدخال بياناتك الشخصية للمتابعة واستعراض المحتوى الأمنى.</p>
+        <p style="text-align: center;">الرجاء إدخال بياناتك الشخصية للمتابعة واستعراض المحتوى الأمني.</p>
         
         <div class="form-group">
             <label for="userName">الاسم:</label>
@@ -24,11 +24,15 @@
 
     <!-- واجهة رسالة هكررتك (مخفية افتراضياً) -->
     <div id="resultSection">
-        <h1>⚠️ هكررتك!</h1>
-        <p>لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين!</p>
-        <p><strong>البيانات اللي "سُرقت" منك:</strong></p>
-        <p id="displayData" style="text-align: right; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px;"></p>
-        <p>✔️ تأكد دائماً من مصدر أي رابط قبل ما تفتحه أو تدخل بياناتك فيه.</p>
+        <h1 style="text-align: center; color: #ff6b6b; font-size: 30px;">⚠️ هكررتك!</h1>
+        <p style="text-align: center;">لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين!</p>
+        
+        <div class="alert-box">
+            <strong style="font-size: 18px; color: #ffffff;">البيانات اللي "سُرقت" منك:</strong>
+            <div id="displayData" class="data-display"></div>
+        </div>
+        
+        <p style="text-align: center; font-size: 16px; color: #cbd5e1;">✔️ تأكد دائماً من مصدر أي رابط قبل ما تفتحه أو تدخل بياناتك فيه.</p>
     </div>
 </div>
 
@@ -42,10 +46,8 @@
             return;
         }
 
-        // عرض البيانات المسروقة
-        document.getElementById('displayData').innerHTML = `👤 الاسم: ${name}<br>🎓 الفئة: ${category}`;
+        document.getElementById('displayData').innerHTML = `👤 <b>الاسم:</b> ${name}<br>🎓 <b>الفئة:</b> ${category}`;
 
-        // إخفاء نموذج الدخول وإظهار صفحة التوعية
         document.getElementById('loginSection').style.display = 'none';
         document.getElementById('resultSection').style.display = 'block';
     }
