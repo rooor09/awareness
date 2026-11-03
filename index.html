@@ -1,55 +1,70 @@
-<!-- الشاشة الأولى: إدخال البيانات -->
-<div class="card" id="formCard">
-    <h2>نادي التوعية والأمن</h2>
-    <p style="color: #8b949e; font-size: 14px;">أدخل بياناتك للمشاركة في الحملة</p>
-    <input type="text" id="username" placeholder="الاسم" required>
-    
-    <select id="userCategory" required>
-        <option value="" disabled selected>اختر التصنيف (طالب، موظف...)</option>
-        <option value="طالب">طالب</option>
-        <option value="موظف">موظف</option>
-        <option value="مهتم">مهتم</option>
-    </select>
-
-    <button onclick="showAlert()">دخول</button>
-</div>
-
-<!-- الشاشة الثانية: التنبيه (تظهر تلقائياً بالبيانات المدخلة) -->
-<div class="card" id="alertCard" style="display: none;">
-    <div class="lock-icon">🔒</div>
-    <div class="alert-title">تنبيه أمني</div>
-    <div class="hacked-header" id="hackedText"></div>
-    
-    <p style="color: #c9d1d9; font-size: 14px; line-height: 1.6; text-align: right;">
-        دخلت رابط ما تعرف مصدره وكتبت معلوماتك على طول. لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين.
-    </p>
-
-    <div class="stolen-box">
-        <div style="color: #ff7b72; font-size: 13px; margin-bottom: 8px;">🚨 البيانات اللي "سُرقت" منك الحين:</div>
-        <div class="data-row"><span>الاسم</span><b id="displayUsername"></b></div>
-        <div class="data-row" style="border:none;"><span>التصنيف</span><b id="displayCategory"></b></div>
+<div class="card" id="mainCard">
+    <!-- واجهة تسجيل الدخول الأولى -->
+    <div id="loginView">
+        <div class="icon">🛡️</div>
+        <div class="badge">الحملة التوعوية</div>
+        <h1>تسجيل الدخول للمنصة</h1>
+        <p class="description">الرجاء إدخال بياناتك الشخصية للمتابعة واستعراض المحتوى الأمني.</p>
+        
+        <div class="form-group">
+            <label>الاسم:</label>
+            <input type="text" id="userNameInput" placeholder="اكتب اسمك هنا...">
+        </div>
+        
+        <div class="form-group">
+            <label>الفئة:</label>
+            <select id="badgeInput">
+                <option value="" disabled selected>اختر الفئة...</option>
+                <option value="طالب">طالب</option>
+                <option value="معلم">معلم</option>
+                <option value="موظف">موظف</option>
+                <option value="أخرى">أخرى</option>
+            </select>
+        </div>
+        
+        <button class="submit-btn" onclick="triggerAlert()">دخول</button>
     </div>
 
-    <div class="tip-box">
-        ✔️ تأكد من مصدر أي رابط قبل ما تفتحه أو تدخل فيه
+    <!-- واجهة التحذير الأمنية (تظهر بعد الضغط) -->
+    <div id="alertView" class="hidden">
+        <div class="icon">🔒</div>
+        <div class="badge">الحملة التوعوية</div>
+        <h1 id="alertTitle">هكرررتك !</h1>
+        
+        <p class="description">
+            دخلت رابط ما تعرف مصدره وكتبت معلوماتك على طول. لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين.
+        </p>
+        
+        <div class="stolen-box">
+            <div class="stolen-title">🚨 البيانات اللي "سُرقت" منك الحين:</div>
+            <div class="stolen-item">👤 الاسم: <span class="stolen-value" id="resName">-</span></div>
+            <div class="stolen-item">🎓 الفئة: <span class="stolen-value" id="resBadge">-</span></div>
+        </div>
+        
+        <div class="tip">
+            ✔️ تأكد دائماً من مصدر أي رابط قبل ما تفتحه أو تدخل بياناتك فيه.
+        </div>
     </div>
 </div>
 
 <script>
-    function showAlert() {
-        var name = document.getElementById('username').value;
-        var category = document.getElementById('userCategory').value;
-
-        if (!name || !category) {
-            alert("يرجى تعبئة جميع الحقول واختيار التصنيف!");
+    function triggerAlert() {
+        const name = document.getElementById('userNameInput').value.trim();
+        const badge = document.getElementById('badgeInput').value;
+        
+        if(!name || !badge) {
+            alert('الرجاء تعبئة الاسم واختيار الفئة قبل المتابعة');
             return;
         }
-
-        document.getElementById('hackedText').innerText = "هكرنااااك يا " + name + " !";
-        document.getElementById('displayUsername').innerText = name;
-        document.getElementById('displayCategory').innerText = category;
-
-        document.getElementById('formCard').style.display = 'none';
-        document.getElementById('alertCard').style.display = 'block';
+        
+        // تعبئة البيانات المدخلة في شاشة التنبيه مع صيغة "هكرررتك يا [الاسم]"
+        document.getElementById('resName').innerText = name;
+        document.getElementById('resBadge').innerText = badge;
+        document.getElementById('alertTitle').innerText = `هكرررتك يا ${name} !`;
+        
+        // تبديل الواجهات وإضافة تفعيل الإطار الأحمر
+        document.getElementById('loginView').classList.add('hidden');
+        document.getElementById('alertView').classList.remove('hidden');
+        document.getElementById('mainCard').classList.add('alert-mode');
     }
 </script>
