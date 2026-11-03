@@ -1,70 +1,52 @@
-<div class="card" id="mainCard">
-    <!-- واجهة تسجيل الدخول الأولى -->
-    <div id="loginView">
-        <div class="icon">🛡️</div>
-        <div class="badge">الحملة التوعوية</div>
-        <h1>تسجيل الدخول للمنصة</h1>
-        <p class="description">الرجاء إدخال بياناتك الشخصية للمتابعة واستعراض المحتوى الأمني.</p>
+<div class="container">
+    <!-- واجهة تسجيل الدخول -->
+    <div id="loginSection">
+        <h1>🛡️ الحملة التوعوية</h1>
+        <p>الرجاء إدخال بياناتك الشخصية للمتابعة واستعراض المحتوى الأمنى.</p>
         
         <div class="form-group">
-            <label>الاسم:</label>
-            <input type="text" id="userNameInput" placeholder="اكتب اسمك هنا...">
+            <label for="userName">الاسم:</label>
+            <input type="text" id="userName" placeholder="اكتب اسمك هنا...">
         </div>
-        
+
         <div class="form-group">
-            <label>الفئة:</label>
-            <select id="badgeInput">
-                <option value="" disabled selected>اختر الفئة...</option>
+            <label for="userCategory">الفئة:</label>
+            <select id="userCategory">
+                <option value="" disabled selected>... اختر الفئة</option>
                 <option value="طالب">طالب</option>
                 <option value="معلم">معلم</option>
-                <option value="موظف">موظف</option>
                 <option value="أخرى">أخرى</option>
             </select>
         </div>
-        
-        <button class="submit-btn" onclick="triggerAlert()">دخول</button>
+
+        <button onclick="showAlert()">دخول</button>
     </div>
 
-    <!-- واجهة التحذير الأمنية (تظهر بعد الضغط) -->
-    <div id="alertView" class="hidden">
-        <div class="icon">🔒</div>
-        <div class="badge">الحملة التوعوية</div>
-        <h1 id="alertTitle">هكرررتك !</h1>
-        
-        <p class="description">
-            دخلت رابط ما تعرف مصدره وكتبت معلوماتك على طول. لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين.
-        </p>
-        
-        <div class="stolen-box">
-            <div class="stolen-title">🚨 البيانات اللي "سُرقت" منك الحين:</div>
-            <div class="stolen-item">👤 الاسم: <span class="stolen-value" id="resName">-</span></div>
-            <div class="stolen-item">🎓 الفئة: <span class="stolen-value" id="resBadge">-</span></div>
-        </div>
-        
-        <div class="tip">
-            ✔️ تأكد دائماً من مصدر أي رابط قبل ما تفتحه أو تدخل بياناتك فيه.
-        </div>
+    <!-- واجهة رسالة هكررتك (مخفية افتراضياً) -->
+    <div id="resultSection">
+        <h1>⚠️ هكررتك!</h1>
+        <p>لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين!</p>
+        <p><strong>البيانات اللي "سُرقت" منك:</strong></p>
+        <p id="displayData" style="text-align: right; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px;"></p>
+        <p>✔️ تأكد دائماً من مصدر أي رابط قبل ما تفتحه أو تدخل بياناتك فيه.</p>
     </div>
 </div>
 
 <script>
-    function triggerAlert() {
-        const name = document.getElementById('userNameInput').value.trim();
-        const badge = document.getElementById('badgeInput').value;
-        
-        if(!name || !badge) {
-            alert('الرجاء تعبئة الاسم واختيار الفئة قبل المتابعة');
+    function showAlert() {
+        const name = document.getElementById('userName').value;
+        const category = document.getElementById('userCategory').value;
+
+        if(!name || !category) {
+            alert('الرجاء إدخال الاسم واختيار الفئة أولاً');
             return;
         }
-        
-        // تعبئة البيانات المدخلة في شاشة التنبيه مع صيغة "هكرررتك يا [الاسم]"
-        document.getElementById('resName').innerText = name;
-        document.getElementById('resBadge').innerText = badge;
-        document.getElementById('alertTitle').innerText = `هكرررتك يا ${name} !`;
-        
-        // تبديل الواجهات وإضافة تفعيل الإطار الأحمر
-        document.getElementById('loginView').classList.add('hidden');
-        document.getElementById('alertView').classList.remove('hidden');
-        document.getElementById('mainCard').classList.add('alert-mode');
+
+        // عرض البيانات المسروقة
+        document.getElementById('displayData').innerHTML = `👤 الاسم: ${name}<br>🎓 الفئة: ${category}`;
+
+        // إخفاء نموذج الدخول وإظهار صفحة التوعية
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('resultSection').style.display = 'block';
     }
 </script>
