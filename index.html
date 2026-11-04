@@ -1,57 +1,23 @@
-<div class="container">
-    <!-- واجهة تسجيل الدخول (تظهر أولاً) -->
-    <div id="loginSection">
-        <h1>🛡️ الحملة التوعوية</h1>
-        <p style="text-align: center;">الرجاء إدخال بياناتك الشخصية للمتابعة واستعراض المحتوى الأمني.</p>
-        
-        <div class="form-group">
-            <label for="userName">الاسم:</label>
-            <input type="text" id="userName" placeholder="اكتب اسمك هنا...">
-        </div>
-
-        <div class="form-group">
-            <label for="userCategory">الفئة:</label>
-            <select id="userCategory">
-                <option value="" disabled selected>... اختر الفئة</option>
-                <option value="طالب">طالب</option>
-                <option value="معلم">معلم</option>
-                <option value="أخرى">أخرى</option>
-            </select>
-        </div>
-
-        <button onclick="showAlert()">دخول</button>
-    </div>
-
-    <!-- واجهة رسالة هكررتك (مخفية ولن تظهر أبداً إلا بعد الضغط على دخول) -->
-    <div id="resultSection">
-        <h1 style="text-align: center; color: #ff6b6b;">⚠️ هكررتك!</h1>
-        <p style="text-align: center;">لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين!</p>
-        
-        <div class="alert-box">
-            <p><strong>البيانات اللي "سُرقت" منك:</strong></p>
-            <p id="displayData" style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; margin-top: 8px; font-size: 18px;"></p>
-        </div>
-        
-        <p style="text-align: center; margin-top: 20px; font-size: 16px;">✔️ تأكد دائماً من مصدر أي رابط قبل ما تفتحه أو تدخل بياناتك فيه.</p>
-    </div>
-</div>
-
-<script>
-    function showAlert() {
-        const name = document.getElementById('userName-input')?.value || document.getElementById('userName').value;
-        const nameInput = document.getElementById('userName').value;
-        const categoryInput = document.getElementById('userCategory').value;
-
-        if(!nameInput || !categoryInput) {
-            alert('الرجاء إدخال الاسم واختيار الفئة أولاً');
-            return;
-        }
-
-        // عرض البيانات المسروقة
-        document.getElementById('displayData').innerHTML = `👤 الاسم: ${nameInput}<br>🎓 الفئة: ${categoryInput}`;
-
-        // إخفاء نموذج الدخول وإظهار رسالة هكررتك
-        document.getElementById('loginSection').style.display = 'none';
-        document.getElementById('resultSection').style.display = 'block';
+/* إخفاء رسالة هكررتك تماماً في البداية ولن تظهر إلا بعد الدخول */
+    #resultSection {
+        display: none;
+        text-align: center;
     }
-</script>
+    .alert-box {
+        background: rgba(239, 68, 68, 0.2);
+        padding: 20px;
+        border-radius: 15px;
+        border: 2px solid #ef4444;
+        margin: 20px 0;
+        text-align: right;
+    }
+    .data-display {
+        background: rgba(0, 0, 0, 0.4);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 10px;
+        font-size: 20px;
+        color: #fca5a5;
+        line-height: 1.8;
+    }
+</style>
