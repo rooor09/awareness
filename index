@@ -1,0 +1,56 @@
+<div class="container">
+    <!-- واجهة تسجيل الدخول -->
+    <div id="loginSection">
+        <h1>🛡️ الحملة التوعوية</h1>
+        <p>الرجاء إدخال بياناتك الشخصية للمتابعة واستعراض المحتوى الأمني.</p>
+        
+        <div class="form-group">
+            <label for="userName">الاسم:</label>
+            <input type="text" id="userName" placeholder="اكتب اسمك هنا...">
+        </div>
+
+        <div class="form-group">
+            <label for="userCategory">الفئة:</label>
+            <select id="userCategory">
+                <option value="" disabled selected>... اختر الفئة</option>
+                <option value="طالب">طالب</option>
+                <option value="معلم">معلم</option>
+                <option value="أخرى">أخرى</option>
+            </select>
+        </div>
+
+        <button onclick="showAlert()">دخول</button>
+    </div>
+
+    <!-- واجهة رسالة هكررتك (مخفية تماماً حتى يتم الضغط على دخول) -->
+    <div id="resultSection">
+        <h1 style="color: #ff6b6b; font-size: 34px;">⚠️ هكررتك!</h1>
+        <p>لو كان هجوم احتيال حقيقي، كانت بياناتك بيد المحتال الحين!</p>
+        
+        <div class="alert-box">
+            <strong style="font-size: 20px; color: #ffffff;">البيانات اللي "سُرقت" منك:</strong>
+            <div id="displayData" class="data-display"></div>
+        </div>
+        
+        <p style="font-size: 17px; color: #e2e8f0; margin-top: 15px;">✔️ تأكد دائماً من مصدر أي رابط قبل ما تفتحه أو تدخل بياناتك فيه.</p>
+    </div>
+</div>
+
+<script>
+    function showAlert() {
+        const nameInput = document.getElementById('userName').value;
+        const categoryInput = document.getElementById('userCategory').value;
+
+        if(!nameInput || !categoryInput) {
+            alert('الرجاء إدخال الاسم واختيار الفئة أولاً');
+            return;
+        }
+
+        // عرض البيانات المسروقة
+        document.getElementById('displayData').innerHTML = `👤 <b>الاسم:</b> ${nameInput}<br>🎓 <b>الفئة:</b> ${categoryInput}`;
+
+        // إخفاء نموذج الدخول وإظهار رسالة هكررتك بشكل فوري
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('resultSection').style.display = 'block';
+    }
+</script>
